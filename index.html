@@ -182,6 +182,9 @@
       <button onclick="switchTab('dashboard')" id="nav-dashboard" class="tab-btn px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 bg-brand-500/20 text-[#ff8a50] border border-brand-500/40 shrink-0">
         <i data-lucide="layout-dashboard" class="w-4 h-4"></i> Dashboard
       </button>
+      <button onclick="switchTab('daily-summary')" id="nav-daily-summary" class="tab-btn px-3 py-1.5 rounded-lg text-xs font-medium text-[#cbd5e1] hover:bg-surface-cardDarkElevated hover:text-white flex items-center gap-1.5 shrink-0 transition">
+        <i data-lucide="sparkles" class="w-4 h-4 text-brand-400"></i> Executive Briefing
+      </button>
       <button onclick="switchTab('capture')" id="nav-capture" class="tab-btn px-3 py-1.5 rounded-lg text-xs font-medium text-[#cbd5e1] hover:bg-surface-cardDarkElevated hover:text-white flex items-center gap-1.5 shrink-0 transition">
         <i data-lucide="camera" class="w-4 h-4 text-brand-400"></i> Data Capture
       </button>
@@ -191,11 +194,17 @@
       <button onclick="switchTab('delays')" id="nav-delays" class="tab-btn px-3 py-1.5 rounded-lg text-xs font-medium text-[#cbd5e1] hover:bg-surface-cardDarkElevated hover:text-white flex items-center gap-1.5 shrink-0 transition">
         <i data-lucide="alert-triangle" class="w-4 h-4 text-brand-500"></i> Delays & Weather
       </button>
+      <button onclick="switchTab('recovery')" id="nav-recovery" class="tab-btn px-3 py-1.5 rounded-lg text-xs font-medium text-[#cbd5e1] hover:bg-surface-cardDarkElevated hover:text-white flex items-center gap-1.5 shrink-0 transition">
+        <i data-lucide="shield" class="w-4 h-4 text-brand-500"></i> Risk & Recovery
+      </button>
       <button onclick="switchTab('simulator')" id="nav-simulator" class="tab-btn px-3 py-1.5 rounded-lg text-xs font-medium text-[#cbd5e1] hover:bg-surface-cardDarkElevated hover:text-white flex items-center gap-1.5 shrink-0 transition">
         <i data-lucide="flask-conical" class="w-4 h-4 text-brand-400"></i> What-If Simulator
       </button>
       <button onclick="switchTab('copilot')" id="nav-copilot" class="tab-btn px-3 py-1.5 rounded-lg text-xs font-medium text-[#cbd5e1] hover:bg-surface-cardDarkElevated hover:text-white flex items-center gap-1.5 shrink-0 transition">
         <i data-lucide="bot" class="w-4 h-4 text-brand-500"></i> AI Copilot
+      </button>
+      <button onclick="switchTab('profile')" id="nav-profile" class="tab-btn px-3 py-1.5 rounded-lg text-xs font-medium text-[#cbd5e1] hover:bg-surface-cardDarkElevated hover:text-white flex items-center gap-1.5 shrink-0 transition">
+        <i data-lucide="user" class="w-4 h-4 text-brand-400"></i> Persona & Sync
       </button>
       <button onclick="switchTab('audit')" id="nav-audit" class="tab-btn px-3 py-1.5 rounded-lg text-xs font-medium text-[#cbd5e1] hover:bg-surface-cardDarkElevated hover:text-white flex items-center gap-1.5 shrink-0 transition">
         <i data-lucide="history" class="w-4 h-4 text-[#94a3b8]"></i> Audit Log
@@ -393,6 +402,188 @@
 
         </div>
 
+      </div>
+
+    </div>
+
+    <!-- ================= VIEW 1.5: DAILY EXECUTIVE SUMMARY ================= -->
+    <div id="view-daily-summary" class="hidden space-y-6">
+      
+      <!-- Top Header Card -->
+      <div class="glass-panel p-5 rounded-2xl border border-surface-borderDark flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="px-2 py-0.5 rounded-full bg-brand-500/20 text-[#ff8a50] text-[10px] font-bold tracking-wider uppercase border border-brand-500/30">1-Minute Executive Debrief</span>
+            <span class="text-xs text-[#94a3b8]">Generated 17:00 Today</span>
+          </div>
+          <h2 class="text-lg font-bold text-[#f8fafc] mt-1 flex items-center gap-2">
+            <i data-lucide="sparkles" class="w-5 h-5 text-brand-500"></i> Daily Executive Briefing & Multi-Tier AI Insights
+          </h2>
+          <p class="text-xs text-[#94a3b8]">Holistic analysis of field progress vs baseline CPM, critical float burn, and weather contingencies.</p>
+        </div>
+        <div class="flex items-center gap-2">
+          <button onclick="regenerateDailySummary()" class="px-3.5 py-2 rounded-xl bg-brand-500/20 text-[#ff8a50] border border-brand-500/40 text-xs font-semibold hover:bg-brand-500/30 transition flex items-center gap-1.5">
+            <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i> Refresh Briefing
+          </button>
+          <button onclick="exportBriefingPdf()" class="px-3.5 py-2 rounded-xl bg-surface-cardDarkElevated border border-surface-borderDark text-xs text-[#e2e8f0] hover:text-white transition flex items-center gap-1.5">
+            <i data-lucide="download" class="w-3.5 h-3.5"></i> Export Report
+          </button>
+        </div>
+      </div>
+
+      <!-- Quick Status Indicators -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="glass-panel p-4 rounded-2xl border border-surface-borderDark">
+          <div class="flex items-center justify-between">
+            <span class="text-xs text-[#94a3b8]">Project Status</span>
+            <span class="px-2 py-0.5 rounded bg-[#ff8a50]/20 text-[#ff8a50] text-[10px] font-bold">Needs Attention</span>
+          </div>
+          <p class="text-lg font-bold text-[#f8fafc] mt-2">Critical Path at Risk</p>
+          <p class="text-xs text-[#94a3b8] mt-1">4-day slip on Pier 4 rebar cage tying threatens Milestone MS-02.</p>
+        </div>
+
+        <div class="glass-panel p-4 rounded-2xl border border-surface-borderDark">
+          <div class="flex items-center justify-between">
+            <span class="text-xs text-[#94a3b8]">Daily Field Throughput</span>
+            <span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 text-[10px] font-bold">Strong</span>
+          </div>
+          <p class="text-lg font-bold text-emerald-400 mt-2">92% Target Reached</p>
+          <p class="text-xs text-[#94a3b8] mt-1">Zone 2 footing excavated, retaining wall drainage 61% complete.</p>
+        </div>
+
+        <div class="glass-panel p-4 rounded-2xl border border-surface-borderDark">
+          <div class="flex items-center justify-between">
+            <span class="text-xs text-[#94a3b8]">Weather Risk Level</span>
+            <span class="px-2 py-0.5 rounded bg-brand-500/20 text-[#ff8a50] text-[10px] font-bold">High (Thu)</span>
+          </div>
+          <p class="text-lg font-bold text-[#ff8a50] mt-2">42mm Rain Alert</p>
+          <p class="text-xs text-[#94a3b8] mt-1">Outdoor deck pour postponed; parallel indoor pre-rigging scheduled.</p>
+        </div>
+      </div>
+
+      <!-- 3-Tier Stakeholder Intelligence Panels -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        
+        <!-- Tier 1: Executive Sponsor -->
+        <div class="glass-panel p-5 rounded-2xl border border-surface-borderDark space-y-3">
+          <div class="flex items-center gap-2 pb-2 border-b border-surface-borderDark">
+            <div class="w-7 h-7 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-xs">1</div>
+            <div>
+              <h3 class="text-sm font-bold text-[#f8fafc]">Executive Sponsor</h3>
+              <p class="text-[10px] text-[#94a3b8]">Macro progress, cash burn & milestone completion</p>
+            </div>
+          </div>
+          <ul class="text-xs text-[#cbd5e1] space-y-2">
+            <li class="flex items-start gap-1.5">
+              <i data-lucide="check-circle" class="w-3.5 h-3.5 text-emerald-400 shrink-0 mt-0.5"></i>
+              <span>Milestone MS-01 (Subsurface Piling) 100% certified with zero safety incidents.</span>
+            </li>
+            <li class="flex items-start gap-1.5">
+              <i data-lucide="alert-circle" class="w-3.5 h-3.5 text-[#ff8a50] shrink-0 mt-0.5"></i>
+              <span>Schedule Variance: -3.8% behind baseline due to unmapped utility clashing on Grid 4C.</span>
+            </li>
+            <li class="flex items-start gap-1.5">
+              <i data-lucide="dollar-sign" class="w-3.5 h-3.5 text-emerald-400 shrink-0 mt-0.5"></i>
+              <span>Earned Value: $27.4M executed against $29.1M planned. Cost Performance Index (CPI): 1.04.</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Tier 2: Project Manager / Planner -->
+        <div class="glass-panel p-5 rounded-2xl border border-surface-borderDark space-y-3">
+          <div class="flex items-center gap-2 pb-2 border-b border-surface-borderDark">
+            <div class="w-7 h-7 rounded-lg bg-brand-500/20 text-brand-500 flex items-center justify-center font-bold text-xs">2</div>
+            <div>
+              <h3 class="text-sm font-bold text-[#f8fafc]">Project Planner & PM</h3>
+              <p class="text-[10px] text-[#94a3b8]">CPM Float analysis, critical path & crash recovery</p>
+            </div>
+          </div>
+          <ul class="text-xs text-[#cbd5e1] space-y-2">
+            <li class="flex items-start gap-1.5">
+              <i data-lucide="clock" class="w-3.5 h-3.5 text-[#ff8a50] shrink-0 mt-0.5"></i>
+              <span>Total Float on ACT-103 stands at -4 days. Milestone MS-02 projected slip: +4 days.</span>
+            </li>
+            <li class="flex items-start gap-1.5">
+              <i data-lucide="sliders" class="w-3.5 h-3.5 text-brand-400 shrink-0 mt-0.5"></i>
+              <span>Strategy: Activate 2nd night shift on rebar fixing ($18.4k budget) to absorb variance completely.</span>
+            </li>
+            <li class="flex items-start gap-1.5">
+              <i data-lucide="file-check" class="w-3.5 h-3.5 text-emerald-400 shrink-0 mt-0.5"></i>
+              <span>Submittals: Precast girder bearing design passed ASTM C39 review.</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Tier 3: Field Site Engineer -->
+        <div class="glass-panel p-5 rounded-2xl border border-surface-borderDark space-y-3">
+          <div class="flex items-center gap-2 pb-2 border-b border-surface-borderDark">
+            <div class="w-7 h-7 rounded-lg bg-blue-500/20 text-blue-400 flex items-center justify-center font-bold text-xs">3</div>
+            <div>
+              <h3 class="text-sm font-bold text-[#f8fafc]">Site Engineer & Foreman</h3>
+              <p class="text-[10px] text-[#94a3b8]">Immediate shift tasks, crew placement & inspections</p>
+            </div>
+          </div>
+          <ul class="text-xs text-[#cbd5e1] space-y-2">
+            <li class="flex items-start gap-1.5">
+              <i data-lucide="hard-hat" class="w-3.5 h-3.5 text-blue-400 shrink-0 mt-0.5"></i>
+              <span>Deploy 12 steel-fixers on Pier 4 cage assembly at 07:00 tomorrow.</span>
+            </li>
+            <li class="flex items-start gap-1.5">
+              <i data-lucide="truck" class="w-3.5 h-3.5 text-emerald-400 shrink-0 mt-0.5"></i>
+              <span>Concrete pump positioned at Grid 4A; 38m³ ready-mix delivery window: 14:00 - 17:30.</span>
+            </li>
+            <li class="flex items-start gap-1.5">
+              <i data-lucide="cloud-rain" class="w-3.5 h-3.5 text-[#ff8a50] shrink-0 mt-0.5"></i>
+              <span>Pre-rig crane cables before Wednesday 18:00 ahead of Thursday wind/rain advisory.</span>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+
+      <!-- Tomorrow's Action Priority Checklist -->
+      <div class="glass-panel p-5 rounded-2xl border border-surface-borderDark space-y-4">
+        <div class="flex items-center justify-between">
+          <h3 class="text-sm font-bold text-[#f8fafc] flex items-center gap-2">
+            <i data-lucide="list-checks" class="w-4 h-4 text-brand-500"></i> AI Priority Action Checklist (Next 24 Hours)
+          </h3>
+          <span class="text-xs text-[#94a3b8]">Auto-generated from CPM & Weather Feed</span>
+        </div>
+
+        <div class="space-y-2.5" id="summaryActionChecklist">
+          <div class="p-3 rounded-xl bg-surface-cardDarkElevated border border-surface-borderDark flex items-center justify-between gap-3">
+            <div class="flex items-center gap-3">
+              <input type="checkbox" checked class="accent-brand-500 w-4 h-4 rounded">
+              <div>
+                <span class="text-xs font-bold text-[#f8fafc]">Pier 4 Rebar Cage Tying (Elevation +14.2m)</span>
+                <p class="text-[11px] text-[#94a3b8]">WBS-2.1 • Assigned to Crew Alpha (12 steel-fixers) • Target: 100% completion</p>
+              </div>
+            </div>
+            <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-rose-500/20 text-rose-400 border border-rose-500/30">Critical Path</span>
+          </div>
+
+          <div class="p-3 rounded-xl bg-surface-cardDarkElevated border border-surface-borderDark flex items-center justify-between gap-3">
+            <div class="flex items-center gap-3">
+              <input type="checkbox" class="accent-brand-500 w-4 h-4 rounded">
+              <div>
+                <span class="text-xs font-bold text-[#f8fafc]">Slump & Air Content Testing on Batch #45</span>
+                <p class="text-[11px] text-[#94a3b8]">ASTM C143 / C231 • On-site QA Lab • Target: Slump 120±20mm</p>
+              </div>
+            </div>
+            <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-brand-500/20 text-[#ff8a50] border border-brand-500/30">Quality Hold Point</span>
+          </div>
+
+          <div class="p-3 rounded-xl bg-surface-cardDarkElevated border border-surface-borderDark flex items-center justify-between gap-3">
+            <div class="flex items-center gap-3">
+              <input type="checkbox" class="accent-brand-500 w-4 h-4 rounded">
+              <div>
+                <span class="text-xs font-bold text-[#f8fafc]">Ground Storage Pre-Rigging for Span 3 Girders</span>
+                <p class="text-[11px] text-[#94a3b8]">WBS-3.1 • Heavy Rigging Crew • Advance rigging before rain window</p>
+              </div>
+            </div>
+            <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-blue-500/20 text-blue-400 border border-blue-500/30">Weather Buffer</span>
+          </div>
+        </div>
       </div>
 
     </div>
@@ -733,6 +924,49 @@
 
     </div>
 
+    <!-- ================= VIEW 4.5: RISK & RECOVERY PLANNER ================= -->
+    <div id="view-recovery" class="hidden space-y-6">
+      
+      <div class="glass-panel p-5 rounded-2xl border border-surface-borderDark flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+        <div>
+          <h2 class="text-lg font-bold text-[#f8fafc] flex items-center gap-2">
+            <i data-lucide="shield-check" class="w-5 h-5 text-brand-500"></i> Side-by-Side Recovery Strategy & Risk Matrix
+          </h2>
+          <p class="text-xs text-[#94a3b8] mt-0.5">Evaluate schedule crashing tradeoffs, cost multipliers, safety scores, and ranked risk register.</p>
+        </div>
+        <div class="flex items-center gap-2">
+          <button onclick="toggleRecoveryTab('strategies')" id="recTabBtn-strategies" class="px-3.5 py-1.5 rounded-xl bg-brand-500/20 text-[#ff8a50] border border-brand-500/40 text-xs font-bold transition">
+            Recovery Strategies (4)
+          </button>
+          <button onclick="toggleRecoveryTab('matrix')" id="recTabBtn-matrix" class="px-3.5 py-1.5 rounded-xl bg-surface-cardDarkElevated text-[#94a3b8] text-xs font-semibold hover:text-white transition">
+            Risk Register (5)
+          </button>
+        </div>
+      </div>
+
+      <!-- Recovery Strategies List Panel -->
+      <div id="recoveryStrategiesPanel" class="space-y-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="recoveryStrategiesCardsList">
+          <!-- Populated dynamically -->
+        </div>
+      </div>
+
+      <!-- Risk Register Matrix Panel -->
+      <div id="riskMatrixPanel" class="hidden space-y-4">
+        <div class="glass-panel p-5 rounded-2xl border border-surface-borderDark space-y-4">
+          <div class="flex items-center justify-between">
+            <h3 class="text-sm font-bold text-[#f8fafc]">Ranked Construction Risk Register</h3>
+            <span class="text-xs text-[#94a3b8]">Criticality = Probability × Cost & Schedule Impact</span>
+          </div>
+
+          <div class="space-y-3" id="riskMatrixCardsList">
+            <!-- Populated dynamically -->
+          </div>
+        </div>
+      </div>
+
+    </div>
+
     <!-- ================= VIEW 5: WHAT-IF SIMULATOR ================= -->
     <div id="view-simulator" class="hidden space-y-6">
       
@@ -888,6 +1122,98 @@
 
     </div>
 
+    <!-- ================= VIEW 6.5: PERSONA & CLOUD SYNC ================= -->
+    <div id="view-profile" class="hidden space-y-6">
+      
+      <div class="glass-panel p-5 rounded-2xl border border-surface-borderDark flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+        <div class="flex items-center gap-3">
+          <div class="w-12 h-12 rounded-2xl bg-brand-500/20 text-brand-500 flex items-center justify-center font-bold text-lg border border-brand-500/30">
+            <i data-lucide="user-check" class="w-6 h-6"></i>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <h2 class="text-base font-bold text-[#f8fafc]" id="profileUserName">Eng. Arun Kumar</h2>
+              <span class="text-xs px-2 py-0.5 rounded-full bg-brand-500/20 text-[#ff8a50] font-bold" id="profileRoleBadge">Site Engineer</span>
+            </div>
+            <p class="text-xs text-[#94a3b8]">Project: Metro Extension Line 4B (PRJ-METRO-09) • Client: Regional Transit Authority</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <button onclick="resetDemoState()" class="px-3.5 py-2 rounded-xl bg-surface-cardDarkElevated border border-surface-borderDark text-xs text-[#e2e8f0] hover:text-white transition flex items-center gap-1.5">
+            <i data-lucide="refresh-ccw" class="w-3.5 h-3.5"></i> Reset Demo Baseline
+          </button>
+        </div>
+      </div>
+
+      <!-- Persona Switcher Grid -->
+      <div class="glass-panel p-5 rounded-2xl border border-surface-borderDark space-y-4">
+        <div>
+          <h3 class="text-sm font-bold text-[#f8fafc]">Active Construction Persona & Permissions</h3>
+          <p class="text-xs text-[#94a3b8] mt-0.5">Switching personas alters AI Copilot context, critical threshold alerts, and automated review gates.</p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+          <div onclick="setRole('Site Engineer')" id="roleCard-SiteEngineer" class="p-4 rounded-xl border border-brand-500/50 bg-brand-500/10 cursor-pointer transition">
+            <div class="flex items-center justify-between">
+              <i data-lucide="hard-hat" class="w-5 h-5 text-brand-500"></i>
+              <span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-brand-500 text-white">Active</span>
+            </div>
+            <h4 class="text-xs font-bold text-[#f8fafc] mt-2">Site Engineer</h4>
+            <p class="text-[11px] text-[#cbd5e1] mt-1">Field photo/voice logging, shift crew placement & quality checklist sign-offs.</p>
+          </div>
+
+          <div onclick="setRole('Project Planner')" id="roleCard-ProjectPlanner" class="p-4 rounded-xl border border-surface-borderDark bg-surface-cardDark cursor-pointer hover:border-brand-500/40 transition">
+            <div class="flex items-center justify-between">
+              <i data-lucide="calendar" class="w-5 h-5 text-brand-400"></i>
+              <span class="text-[10px] text-[#94a3b8]">CPM Lead</span>
+            </div>
+            <h4 class="text-xs font-bold text-[#f8fafc] mt-2">Project Planner</h4>
+            <p class="text-[11px] text-[#cbd5e1] mt-1">Gantt topological rebalancing, float audit, Primavera P6 import/export.</p>
+          </div>
+
+          <div onclick="setRole('Project Manager')" id="roleCard-ProjectManager" class="p-4 rounded-xl border border-surface-borderDark bg-surface-cardDark cursor-pointer hover:border-brand-500/40 transition">
+            <div class="flex items-center justify-between">
+              <i data-lucide="briefcase" class="w-5 h-5 text-brand-300"></i>
+              <span class="text-[10px] text-[#94a3b8]">Ops Lead</span>
+            </div>
+            <h4 class="text-xs font-bold text-[#f8fafc] mt-2">Project Manager</h4>
+            <p class="text-[11px] text-[#cbd5e1] mt-1">Cost variance, change order approvals, subcontractor shift reallocations.</p>
+          </div>
+
+          <div onclick="setRole('Executive')" id="roleCard-Executive" class="p-4 rounded-xl border border-surface-borderDark bg-surface-cardDark cursor-pointer hover:border-brand-500/40 transition">
+            <div class="flex items-center justify-between">
+              <i data-lucide="award" class="w-5 h-5 text-emerald-400"></i>
+              <span class="text-[10px] text-[#94a3b8]">Sponsor</span>
+            </div>
+            <h4 class="text-xs font-bold text-[#f8fafc] mt-2">Executive Sponsor</h4>
+            <p class="text-[11px] text-[#cbd5e1] mt-1">Earned Value (EVMS), macroscopic project delivery dates, cash burn rate.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ASTM Specs & Engineering Reference Dictionary -->
+      <div class="glass-panel p-5 rounded-2xl border border-surface-borderDark space-y-3">
+        <h3 class="text-sm font-bold text-[#f8fafc] flex items-center gap-2">
+          <i data-lucide="book-open" class="w-4 h-4 text-brand-500"></i> Active Engineering Standards & Spec Knowledge
+        </h3>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
+          <div class="p-3 rounded-xl bg-surface-inputDark border border-surface-borderDark">
+            <span class="font-mono font-bold text-brand-400">ASTM C39 / C39M</span>
+            <p class="text-[11px] text-[#94a3b8] mt-1">Compressive Strength of Cylindrical Concrete Specimens (28-day cure target 35 MPa).</p>
+          </div>
+          <div class="p-3 rounded-xl bg-surface-inputDark border border-surface-borderDark">
+            <span class="font-mono font-bold text-brand-400">ASTM A615 / Grade 60</span>
+            <p class="text-[11px] text-[#94a3b8] mt-1">Deformed Billet-Steel Bars for Concrete Reinforcement on Pier 4 cage column.</p>
+          </div>
+          <div class="p-3 rounded-xl bg-surface-inputDark border border-surface-borderDark">
+            <span class="font-mono font-bold text-brand-400">AASHTO LRFD 9th Ed</span>
+            <p class="text-[11px] text-[#94a3b8] mt-1">Bridge Design Specifications for Deck Girder Erection Span 3 pre-stressing.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
     <!-- ================= VIEW 7: AUDIT LOG ================= -->
     <div id="view-audit" class="hidden space-y-6">
       
@@ -977,6 +1303,19 @@
         weatherRisk: "Medium"
       },
       userRole: "Site Engineer",
+      recoveryStrategies: [
+        { id: "STRAT-01", name: "2nd Night Shift Deployment (Rebar & Shuttering)", targetAct: "ACT-103 (Pier 4 Rebar)", timeRecoveryDays: 4.5, costImpactUsd: 18400, safetyScore: 88, isApplied: true, description: "Add dedicated 8-hr night crew on Pier 4 cage assembly to eliminate 4-day critical slip before Milestone MS-02." },
+        { id: "STRAT-02", name: "Deploy Parallel Rebar Crew from Zone 1", targetAct: "ACT-103 (Pier 4 Rebar)", timeRecoveryDays: 3.0, costImpactUsd: 11200, safetyScore: 94, isApplied: false, description: "Reallocate steel-fixing crew from completed Zone 1 drainage to speed up cage tying without overtime fatigue." },
+        { id: "STRAT-03", name: "High-Early Strength Curing Additive (Type III)", targetAct: "ACT-105 (Deck Girder Pour)", timeRecoveryDays: 2.5, costImpactUsd: 7600, safetyScore: 96, isApplied: false, description: "Chemical accelerator in ready-mix concrete reaches 25 MPa in 48 hours, enabling early formwork stripping." },
+        { id: "STRAT-04", name: "Pre-Assembly Ground Rigging for Girder Span 3", targetAct: "ACT-105 (Precast Girder)", timeRecoveryDays: 2.0, costImpactUsd: 5200, safetyScore: 92, isApplied: false, description: "Pre-rig girder lifting eyes and bearings in staging yard before crane mobilization." }
+      ],
+      risks: [
+        { id: "RSK-01", title: "Pier 4 Rebar Critical Path Float Deficit", category: "SCHEDULE", probability: "HIGH (85%)", impact: "4.0 Days ($38k)", score: 92, mitigations: "Deploy 2nd shift; re-allocate steel fixers." },
+        { id: "RSK-02", title: "Heavy Precipitation & Crane Wind Limits", category: "WEATHER", probability: "HIGH (90%)", impact: "2.0 Days ($16k)", score: 85, mitigations: "Hold high-elevation deck casting on Thursday; pre-rig on ground." },
+        { id: "RSK-03", title: "Subsurface Utility Conflict (Grid 4C)", category: "UTILITY", probability: "MED (40%)", impact: "3.0 Days ($24k)", score: 68, mitigations: "Vacuum excavation verified; relocation bypass approved." },
+        { id: "RSK-04", title: "Ready-Mix Batch Quality / Slump Variance", category: "QUALITY", probability: "LOW (15%)", impact: "1.5 Days ($12k)", score: 45, mitigations: "Mandatory slump & cylinder break test on every 3rd truck." },
+        { id: "RSK-05", title: "Structural Steel Supplier Lead Time Drift", category: "SUPPLY", probability: "MED (35%)", impact: "5.0 Days ($45k)", score: 62, mitigations: "Dual-source bearing pad supplier with expedited delivery." }
+      ],
       activities: [
         { id: "ACT-101", code: "WBS-1.1", name: "Site Clearance & Utility Relocation", plannedQty: 100, actualQty: 100, unit: "%", progress: 100, duration: 12, earlyStart: "Day 1", earlyFinish: "Day 12", totalFloat: 0, isCritical: false, status: "COMPLETED" },
         { id: "ACT-102", code: "WBS-1.2", name: "Foundation Bore Piles P1-P4", plannedQty: 32, actualQty: 32, unit: "piles", progress: 100, duration: 18, earlyStart: "Day 13", earlyFinish: "Day 30", totalFloat: 0, isCritical: false, status: "COMPLETED" },
@@ -1014,19 +1353,21 @@
       renderCpmScheduleTable();
       renderWeatherProtocols();
       renderDelayCausations();
+      renderRecoveryStrategies();
+      renderRiskMatrix();
       renderAuditTrail();
       initSpeechEngine();
     });
 
     // ================= NAVIGATION =================
     function switchTab(tabId) {
-      const views = ['dashboard', 'capture', 'gantt', 'delays', 'simulator', 'copilot', 'audit'];
+      const views = ['dashboard', 'daily-summary', 'capture', 'gantt', 'delays', 'recovery', 'simulator', 'copilot', 'profile', 'audit'];
       views.forEach(v => {
         const viewEl = document.getElementById(`view-${v}`);
         const navEl = document.getElementById(`nav-${v}`);
         if (viewEl) viewEl.classList.add('hidden');
         if (navEl) {
-          navEl.className = "tab-btn px-3 py-1.5 rounded-lg text-xs font-medium text-slate-300 hover:bg-slate-800/80 hover:text-white flex items-center gap-1.5 shrink-0 transition";
+          navEl.className = "tab-btn px-3 py-1.5 rounded-lg text-xs font-medium text-[#cbd5e1] hover:bg-surface-cardDarkElevated hover:text-white flex items-center gap-1.5 shrink-0 transition";
         }
       });
 
@@ -1034,7 +1375,7 @@
       const targetNav = document.getElementById(`nav-${tabId}`);
       if (targetView) targetView.classList.remove('hidden');
       if (targetNav) {
-        targetNav.className = "tab-btn px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 bg-amber-500/20 text-amber-300 border border-amber-500/40 shrink-0";
+        targetNav.className = "tab-btn px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 bg-brand-500/20 text-[#ff8a50] border border-brand-500/40 shrink-0";
       }
 
       lucide.createIcons();
@@ -1606,6 +1947,147 @@
           }
         }
       });
+    }
+
+    // ================= DAILY EXECUTIVE BRIEFING =================
+    function regenerateDailySummary() {
+      alert("✨ AI Daily Briefing regenerated using latest field logs and Primavera CPM calculations.");
+    }
+
+    function exportBriefingPdf() {
+      alert("📄 Exporting Executive Briefing Report (PDF format) with audit hash & timestamp.");
+    }
+
+    // ================= RISK & RECOVERY =================
+    function toggleRecoveryTab(tab) {
+      const pStrategies = document.getElementById('recoveryStrategiesPanel');
+      const pMatrix = document.getElementById('riskMatrixPanel');
+      const btnStrategies = document.getElementById('recTabBtn-strategies');
+      const btnMatrix = document.getElementById('recTabBtn-matrix');
+
+      if (tab === 'strategies') {
+        pStrategies.classList.remove('hidden');
+        pMatrix.classList.add('hidden');
+        btnStrategies.className = "px-3.5 py-1.5 rounded-xl bg-brand-500/20 text-[#ff8a50] border border-brand-500/40 text-xs font-bold transition";
+        btnMatrix.className = "px-3.5 py-1.5 rounded-xl bg-surface-cardDarkElevated text-[#94a3b8] text-xs font-semibold hover:text-white transition";
+      } else {
+        pStrategies.classList.add('hidden');
+        pMatrix.classList.remove('hidden');
+        btnMatrix.className = "px-3.5 py-1.5 rounded-xl bg-brand-500/20 text-[#ff8a50] border border-brand-500/40 text-xs font-bold transition";
+        btnStrategies.className = "px-3.5 py-1.5 rounded-xl bg-surface-cardDarkElevated text-[#94a3b8] text-xs font-semibold hover:text-white transition";
+      }
+      lucide.createIcons();
+    }
+
+    function renderRecoveryStrategies() {
+      const container = document.getElementById('recoveryStrategiesCardsList');
+      if (!container) return;
+      container.innerHTML = STATE.recoveryStrategies.map(strat => `
+        <div class="glass-panel p-4 rounded-2xl border ${strat.isApplied ? 'border-brand-500/60 bg-brand-500/5' : 'border-surface-borderDark'} space-y-3 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between">
+              <span class="font-mono text-[10px] text-brand-400 font-bold">${strat.id}</span>
+              <span class="text-[10px] font-bold px-2 py-0.5 rounded ${strat.isApplied ? 'bg-brand-500/20 text-[#ff8a50] border border-brand-500/40' : 'bg-surface-inputDark text-[#94a3b8]'}">
+                ${strat.isApplied ? 'ACTIVE IN PLAN' : 'RECOMMENDED'}
+              </span>
+            </div>
+            <h4 class="text-xs font-bold text-[#f8fafc] mt-1">${strat.name}</h4>
+            <p class="text-[11px] text-[#cbd5e1] mt-1">${strat.description}</p>
+          </div>
+
+          <div class="space-y-2 pt-2 border-t border-surface-borderDark/60">
+            <div class="grid grid-cols-3 gap-2 text-center">
+              <div class="p-2 rounded-lg bg-surface-inputDark border border-surface-borderDark">
+                <span class="text-[9px] text-[#94a3b8] block">Recovery</span>
+                <span class="text-xs font-bold text-emerald-400">+${strat.timeRecoveryDays} Days</span>
+              </div>
+              <div class="p-2 rounded-lg bg-surface-inputDark border border-surface-borderDark">
+                <span class="text-[9px] text-[#94a3b8] block">Est. Cost</span>
+                <span class="text-xs font-bold text-[#ff8a50]">$${strat.costImpactUsd.toLocaleString()}</span>
+              </div>
+              <div class="p-2 rounded-lg bg-surface-inputDark border border-surface-borderDark">
+                <span class="text-[9px] text-[#94a3b8] block">Safety Index</span>
+                <span class="text-xs font-bold text-emerald-400">${strat.safetyScore}/100</span>
+              </div>
+            </div>
+
+            <button onclick="toggleApplyStrategy('${strat.id}')" class="w-full py-2 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 ${strat.isApplied ? 'bg-rose-500/20 text-rose-300 border border-rose-500/30 hover:bg-rose-500/30' : 'bg-brand-500 hover:bg-brand-600 text-white shadow-md shadow-brand-500/20'}">
+              <i data-lucide="${strat.isApplied ? 'x' : 'check'}" class="w-3.5 h-3.5"></i>
+              ${strat.isApplied ? 'Remove Strategy' : 'Apply to Baseline'}
+            </button>
+          </div>
+        </div>
+      `).join('');
+      lucide.createIcons();
+    }
+
+    function toggleApplyStrategy(id) {
+      const strat = STATE.recoveryStrategies.find(s => s.id === id);
+      if (strat) {
+        strat.isApplied = !strat.isApplied;
+        addAuditLog("RECOVERY_PLAN", `${strat.isApplied ? 'Applied' : 'Removed'} strategy ${strat.name}`);
+        renderRecoveryStrategies();
+      }
+    }
+
+    function renderRiskMatrix() {
+      const container = document.getElementById('riskMatrixCardsList');
+      if (!container) return;
+      container.innerHTML = STATE.risks.map(r => `
+        <div class="p-3.5 rounded-xl bg-surface-cardDarkElevated border border-surface-borderDark flex flex-col md:flex-row md:items-center justify-between gap-3">
+          <div class="space-y-1">
+            <div class="flex items-center gap-2">
+              <span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-brand-500/20 text-[#ff8a50] font-bold">${r.id}</span>
+              <span class="text-xs font-bold text-[#f8fafc]">${r.title}</span>
+              <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-slate-800 text-[#cbd5e1]">${r.category}</span>
+            </div>
+            <p class="text-[11px] text-[#cbd5e1]"><strong>Mitigation Protocol:</strong> ${r.mitigations}</p>
+          </div>
+
+          <div class="flex items-center gap-4 text-right shrink-0">
+            <div>
+              <span class="text-[10px] text-[#94a3b8] block">Risk Criticality</span>
+              <span class="text-xs font-mono font-extrabold ${r.score > 80 ? 'text-rose-400' : 'text-[#ff8a50]'}">${r.score}/100</span>
+            </div>
+            <div>
+              <span class="text-[10px] text-[#94a3b8] block">Impact / Prob</span>
+              <span class="text-xs font-semibold text-[#e2e8f0]">${r.probability}</span>
+            </div>
+          </div>
+        </div>
+      `).join('');
+      lucide.createIcons();
+    }
+
+    // ================= PERSONA & PROFILE =================
+    function setRole(roleName) {
+      STATE.userRole = roleName;
+      document.getElementById('currentRoleText').textContent = roleName;
+      const profileRoleBadge = document.getElementById('profileRoleBadge');
+      if (profileRoleBadge) profileRoleBadge.textContent = roleName;
+
+      ['SiteEngineer', 'ProjectPlanner', 'ProjectManager', 'Executive'].forEach(r => {
+        const card = document.getElementById(`roleCard-${r}`);
+        if (card) {
+          const match = (r === 'SiteEngineer' && roleName === 'Site Engineer') ||
+                        (r === 'ProjectPlanner' && roleName === 'Project Planner') ||
+                        (r === 'ProjectManager' && roleName === 'Project Manager') ||
+                        (r === 'Executive' && roleName === 'Executive');
+          if (match) {
+            card.className = "p-4 rounded-xl border border-brand-500/50 bg-brand-500/10 cursor-pointer transition";
+          } else {
+            card.className = "p-4 rounded-xl border border-surface-borderDark bg-surface-cardDark cursor-pointer hover:border-brand-500/40 transition";
+          }
+        }
+      });
+
+      const menu = document.getElementById('roleMenu');
+      if (menu) menu.classList.add('hidden');
+      addAuditLog("ROLE_SWITCH", `User switched active persona to ${roleName}`);
+    }
+
+    function resetDemoState() {
+      alert("🔄 Demo Baseline reset to factory state.");
     }
 
     // ================= MODALS & UTILS =================
