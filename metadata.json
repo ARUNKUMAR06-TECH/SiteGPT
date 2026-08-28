@@ -1,0 +1,8 @@
+{
+  "name": "SiteGPT",
+  "description": "Intelligent Planning-to-Execution Bridge for Infrastructure Projects",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
